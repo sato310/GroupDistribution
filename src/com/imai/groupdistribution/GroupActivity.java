@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -26,9 +27,20 @@ public class GroupActivity extends Activity {
 
 		Intent intent = getIntent();
 		ArrayList<String> allNameList = new ArrayList<String>();
-		SampleAdapter addNameList = new SampleAdapter(this);
-
+		ArrayList<Integer> noNameNumberList = new ArrayList<Integer>();
+		
 		allNameList = intent.getStringArrayListExtra("list");
+		noNameNumberList = intent.getIntegerArrayListExtra("noNameNumber");
+		
+		// 欠席者の名前を除外(大きい番号から引いていかないと変な事なる)
+		for (int i = 0; i < noNameNumberList.size(); i++) {
+			int num = noNameNumberList.get(i);
+			Log.i("除外する人", num + "");
+			Log.i("除外する人", allNameList.get(num));
+			allNameList.remove(num);
+		}
+		
+		SampleAdapter addNameList = new SampleAdapter(this);
 
 		Collections.shuffle(allNameList);
 
