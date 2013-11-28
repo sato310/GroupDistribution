@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -34,16 +33,52 @@ public class GroupActivity extends Activity {
 		Collections.shuffle(allNameList);
 
 		int groupNum = 0;
-		for (int i = 0; i < allNameList.size(); i++) {
-			if (i % 4 == 0) {
-				groupNum++;
-				addNameList.add(new BindData("グループ" + groupNum, false));
+		if (allNameList.size() % 4 == 1) {
+			// 4人で割って余りが1になる時(3人グループを3つ)
+			for (int i = 0; i < allNameList.size(); i++) {
+				if (groupNum <= 3) {
+					// 3人グループを3つ
+					if (i % 3 == 0) {
+						groupNum++;
+						addNameList.add(new BindData("グループ" + groupNum, false));
+					}
+					addNameList.add(new BindData(allNameList.get(i), true));
+				}else {
+					if (i % 4 == 1) {
+						groupNum++;
+						addNameList.add(new BindData("グループ" + groupNum, false));
+					}
+					addNameList.add(new BindData(allNameList.get(i), true));
+				}
 			}
-			addNameList.add(new BindData(allNameList.get(i), true));
-			Log.i("debug", allNameList.get(i));
+		} else if (allNameList.size() % 4 == 2) {
+			// 4人で割って余りが1になる時(3人グループを2つ)
+			for (int i = 0; i < allNameList.size(); i++) {
+				if (groupNum <= 2) {
+					// 3人グループを3つ
+					if (i % 3 == 0) {
+						groupNum++;
+						addNameList.add(new BindData("グループ" + groupNum, false));
+					}
+					addNameList.add(new BindData(allNameList.get(i), true));
+				}else {
+					if (i % 4 == 2) {
+						groupNum++;
+						addNameList.add(new BindData("グループ" + groupNum, false));
+					}
+					addNameList.add(new BindData(allNameList.get(i), true));
+				}
+			}
+		} else {
+			for (int i = 0; i < allNameList.size(); i++) {
+				if (i % 4 == 0) {
+					groupNum++;
+					addNameList.add(new BindData("グループ" + groupNum, false));
+				}
+				addNameList.add(new BindData(allNameList.get(i), true));
+			}
 		}
 		listView.setAdapter(addNameList);
-
 	}
 
 	@Override
@@ -112,7 +147,7 @@ public class GroupActivity extends Activity {
 
 			// ﾗﾍﾞﾙﾉ処理
 			else {
-				holder.mTextView.setBackgroundColor(Color.DKGRAY);
+				holder.mTextView.setBackgroundColor(Color.GRAY);
 			}
 			return convertView;
 		}
