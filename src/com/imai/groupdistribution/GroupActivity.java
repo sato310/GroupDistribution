@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -33,10 +32,11 @@ public class GroupActivity extends Activity {
 		noNameNumberList = intent.getIntegerArrayListExtra("noNameNumber");
 		
 		// 欠席者の名前を除外(大きい番号から引いていかないと変な事なる)
+	    // noNameNumberListの並びを大きい順に変える
+		Collections.reverse(noNameNumberList);
+		
 		for (int i = 0; i < noNameNumberList.size(); i++) {
 			int num = noNameNumberList.get(i);
-			Log.i("除外する人", num + "");
-			Log.i("除外する人", allNameList.get(num));
 			allNameList.remove(num);
 		}
 		
@@ -64,7 +64,7 @@ public class GroupActivity extends Activity {
 				}
 			}
 		} else if (allNameList.size() % 4 == 2) {
-			// 4人で割って余りが1になる時(3人グループを2つ)
+			// 4人で割って余りが2になる時(3人グループを2つ)
 			for (int i = 0; i < allNameList.size(); i++) {
 				if (groupNum <= 2) {
 					// 3人グループを3つ
@@ -92,6 +92,7 @@ public class GroupActivity extends Activity {
 		}
 		listView.setAdapter(addNameList);
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

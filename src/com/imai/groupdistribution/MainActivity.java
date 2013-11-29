@@ -1,7 +1,6 @@
 package com.imai.groupdistribution;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -72,9 +71,6 @@ public class MainActivity extends Activity implements OnClickListener {
 						allNameList
 				);
 		
-		// フォーカスが当たるよう設定
-//		listView.setItemsCanFocus(true);
-		
 		// 選択方式の設定
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
@@ -114,9 +110,6 @@ public class MainActivity extends Activity implements OnClickListener {
 				Log.i("除外する人", allNameList.get(key));
 			}
 		}
-		
-	    // noNameNumberListの並びを大きい順に変える
-		Collections.reverse(noNameNumberList);
 		
 		Intent intent = new Intent(MainActivity.this, GroupActivity.class);
 		// 生徒名を渡す
