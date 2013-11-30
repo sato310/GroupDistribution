@@ -5,13 +5,13 @@
   android:layout_height="fill_parent"
   android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="グループ作成" />
+        android:text="欠席者にチェックを入れてください。" />
 
     <ListView
         android:id="@+id/listView1"
@@ -20,15 +20,30 @@
         android:layout_above="@+id/button1"
         android:layout_below="@+id/textView1"
         android:textSize="30sp" >
-        
+
     </ListView>
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="欠席者にチェックを入れてください。" />
+        android:text="グループ作成" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button1"
+        android:layout_toRightOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button1"
+        android:layout_toRightOf="@+id/button1"
+        android:text="基準人数" />
 
 </RelativeLayout>

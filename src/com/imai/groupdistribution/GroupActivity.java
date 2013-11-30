@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class GroupActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,6 +30,8 @@ public class GroupActivity extends Activity {
 		
 		allNameList = intent.getStringArrayListExtra("list");
 		noNameNumberList = intent.getIntegerArrayListExtra("noNameNumber");
+		// グループの人数
+		int groupPeople = intent.getIntExtra("setGroupPeple", 0);
 		
 		// 欠席者の名前を除外(大きい番号から引いていかないと変な事なる)
 	    // noNameNumberListの並びを大きい順に変える
@@ -44,50 +46,25 @@ public class GroupActivity extends Activity {
 
 		Collections.shuffle(allNameList);
 
+		// グループ振り分け処理
 		int groupNum = 0;
-		if (allNameList.size() % 4 == 1) {
-			// 4人で割って余りが1になる時(3人グループを3つ)
-			for (int i = 0; i < allNameList.size(); i++) {
-				if (groupNum <= 3) {
-					// 3人グループを3つ
-					if (i % 3 == 0) {
-						groupNum++;
-						addNameList.add(new BindData("グループ" + groupNum, false));
+		for (int i = 0; i < groupPeople; i++) {
+			if (allNameList.size() % groupPeople == i) {
+				for (int j = 0; j < allNameList.size(); j++) {
+					if (groupNum <= (groupPeople - i) && i != 0 ) {
+						if (j % (groupPeople - 1) == 0) {
+							groupNum++;
+							addNameList.add(new BindData("グループ" + groupNum, false));
+						}
+						addNameList.add(new BindData(allNameList.get(j), true));
+					} else {
+						if (j % groupPeople == i) {
+							groupNum++;
+							addNameList.add(new BindData("グループ" + groupNum, false));
+						}
+						addNameList.add(new BindData(allNameList.get(j), true));
 					}
-					addNameList.add(new BindData(allNameList.get(i), true));
-				}else {
-					if (i % 4 == 1) {
-						groupNum++;
-						addNameList.add(new BindData("グループ" + groupNum, false));
-					}
-					addNameList.add(new BindData(allNameList.get(i), true));
 				}
-			}
-		} else if (allNameList.size() % 4 == 2) {
-			// 4人で割って余りが2になる時(3人グループを2つ)
-			for (int i = 0; i < allNameList.size(); i++) {
-				if (groupNum <= 2) {
-					// 3人グループを3つ
-					if (i % 3 == 0) {
-						groupNum++;
-						addNameList.add(new BindData("グループ" + groupNum, false));
-					}
-					addNameList.add(new BindData(allNameList.get(i), true));
-				}else {
-					if (i % 4 == 2) {
-						groupNum++;
-						addNameList.add(new BindData("グループ" + groupNum, false));
-					}
-					addNameList.add(new BindData(allNameList.get(i), true));
-				}
-			}
-		} else {
-			for (int i = 0; i < allNameList.size(); i++) {
-				if (i % 4 == 0) {
-					groupNum++;
-					addNameList.add(new BindData("グループ" + groupNum, false));
-				}
-				addNameList.add(new BindData(allNameList.get(i), true));
 			}
 		}
 		listView.setAdapter(addNameList);
